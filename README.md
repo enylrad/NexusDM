@@ -34,6 +34,23 @@ mutations instead of free text.
 - **Foundry VTT** – nodes can point to Foundry documents (Actor, Scene, Item, JournalEntry, …)
   through their UUID. Foundry links and assets are never sent to or modified by the LLM.
 
+## AI integration
+
+The AI layer is provider-agnostic: `LlmClient` (in `ai.client`) is the only contract the rest of
+the app depends on. The first implementation, `AnthropicLlmClient`, uses the official Anthropic
+Java SDK and the Claude API; a local model backend can be added later behind the same interface.
+
+- `MutationPromptBuilder` builds a stable system prompt (domain rules, node and edge types,
+  property schema; cached by the API) and a per-request user prompt with the rendered subgraph.
+- `SubgraphContextRenderer` sends only what the model needs: Foundry links, assets, versions and
+  timestamps are never included, and long descriptions only for the focus nodes.
+- `MutationBatchSchema` constrains the answer with structured outputs, so the model can only
+  return a valid `MutationBatch`.
+- `MutationProposalService` ties everything together and returns the proposed batch.
+
+Configuration: set the `ANTHROPIC_API_KEY` environment variable (or pass the key through
+`AnthropicSettings`). The default model is `claude-opus-5`.
+
 ## Project structure
 
 - `desktopApp` – desktop entry point (`main()`).
@@ -51,10 +68,10 @@ es.enylrad.nexusdm
 │   ├── local        // Room database, entities, DAOs (planned)
 │   ├── mapper       // Entity <-> domain mappers (planned)
 │   └── repository   // Repository implementations (planned)
-├── ai
-│   ├── client       // LLM client (planned)
-│   ├── context      // Subgraph -> prompt context (planned)
-│   └── schema       // JSON/tool schema for MutationBatch (planned)
+├── ai               // MutationProposalService
+│   ├── client       // LlmClient contract; jvmMain: Claude API implementation
+│   ├── context      // Subgraph -> prompt context, prompt builder
+│   └── schema       // JSON schema for MutationBatch (structured outputs)
 ├── ingestion        // Documents -> graph extraction (planned)
 ├── integration
 │   └── foundry      // Foundry VTT import/sync (planned)

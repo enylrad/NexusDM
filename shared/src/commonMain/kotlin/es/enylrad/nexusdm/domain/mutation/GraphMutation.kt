@@ -29,6 +29,7 @@ sealed interface GraphMutation {
         val description: String = "",
         val aliases: Set<String> = emptySet(),
         val tags: Set<String> = emptySet(),
+        @Serializable(with = KeyValueMapSerializer::class)
         val properties: Map<String, String> = emptyMap(),
         val visibility: Visibility = Visibility.DM_ONLY,
     ) : GraphMutation
@@ -68,6 +69,7 @@ sealed interface GraphMutation {
         val target: NodeRef,
         val type: EdgeType,
         val description: String = "",
+        @Serializable(with = KeyValueMapSerializer::class)
         val properties: Map<String, String> = emptyMap(),
         val visibility: Visibility = Visibility.DM_ONLY,
     ) : GraphMutation

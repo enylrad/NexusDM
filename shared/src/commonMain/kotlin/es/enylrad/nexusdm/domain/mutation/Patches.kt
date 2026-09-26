@@ -20,6 +20,7 @@ data class NodePatch(
     val addTags: Set<String> = emptySet(),
     val removeTags: Set<String> = emptySet(),
     /** Properties to insert or overwrite. */
+    @Serializable(with = KeyValueMapSerializer::class)
     val setProperties: Map<String, String> = emptyMap(),
     /** Property keys to delete. */
     val removeProperties: Set<String> = emptySet(),
@@ -31,6 +32,7 @@ data class EdgePatch(
     val type: EdgeType? = null,
     val description: String? = null,
     val visibility: Visibility? = null,
+    @Serializable(with = KeyValueMapSerializer::class)
     val setProperties: Map<String, String> = emptyMap(),
     val removeProperties: Set<String> = emptySet(),
 )
