@@ -1,0 +1,43 @@
+<resources>
+    <string name="playground_title">AI playground</string>
+    <string name="playground_subtitle">Try the AI on a sample campaign. Nothing is saved yet.</string>
+
+    <string name="section_backend">AI backend</string>
+    <string name="backend_ollama">Ollama (local)</string>
+    <string name="backend_claude">Claude (API)</string>
+    <string name="ollama_url">Ollama URL</string>
+    <string name="refresh_models">Refresh models</string>
+    <string name="loading_models">Loading models…</string>
+    <string name="select_model">Select a model</string>
+    <string name="no_models">No models found. Install one with: ollama pull qwen3:14b</string>
+    <string name="models_error">Could not load models: %1$s</string>
+    <string name="claude_api_key">API key (empty: use ANTHROPIC_API_KEY)</string>
+    <string name="model_label">Model</string>
+
+    <string name="section_campaign">Campaign: %1$s</string>
+    <string name="focus_hint">Select the elements your idea is about.</string>
+    <string name="depth_label">Context depth: %1$d</string>
+    <string name="node_locked">locked</string>
+
+    <string name="section_request">Your idea</string>
+    <string name="request_placeholder">E.g. Lord Varis hires a necromancer to raid the crypt before the party arrives.</string>
+    <string name="action_run">Propose changes</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="running">Waiting for the model… local models can take a few minutes.</string>
+
+    <string name="rationale_title">Rationale</string>
+    <string name="operations_title">Proposed operations (%1$d)</string>
+    <string name="no_operations">The model proposed no changes.</string>
+    <string name="show_json">Show JSON</string>
+    <string name="hide_json">Hide JSON</string>
+    <string name="result_stats">%1$d nodes and %2$d edges sent · %3$s s</string>
+    <string name="error_message">Error: %1$s</string>
+
+    <string name="op_add_node">New node</string>
+    <string name="op_update_node">Update node</string>
+    <string name="op_remove_node">Remove node</string>
+    <string name="op_merge_nodes">Merge nodes</string>
+    <string name="op_add_edge">New relationship</string>
+    <string name="op_update_edge">Update relationship</string>
+    <string name="op_remove_edge">Remove relationship</string>
+</resources>

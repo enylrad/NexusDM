@@ -1,0 +1,43 @@
+<resources>
+    <string name="playground_title">Pruebas de IA</string>
+    <string name="playground_subtitle">Prueba la IA con una campaña de ejemplo. Todavía no se guarda nada.</string>
+
+    <string name="section_backend">Motor de IA</string>
+    <string name="backend_ollama">Ollama (local)</string>
+    <string name="backend_claude">Claude (API)</string>
+    <string name="ollama_url">URL de Ollama</string>
+    <string name="refresh_models">Actualizar modelos</string>
+    <string name="loading_models">Cargando modelos…</string>
+    <string name="select_model">Elige un modelo</string>
+    <string name="no_models">No hay modelos instalados. Instala uno con: ollama pull qwen3:14b</string>
+    <string name="models_error">No se pudieron cargar los modelos: %1$s</string>
+    <string name="claude_api_key">Clave de API (vacía: usa ANTHROPIC_API_KEY)</string>
+    <string name="model_label">Modelo</string>
+
+    <string name="section_campaign">Campaña: %1$s</string>
+    <string name="focus_hint">Marca los elementos a los que afecta tu idea.</string>
+    <string name="depth_label">Profundidad del contexto: %1$d</string>
+    <string name="node_locked">bloqueado</string>
+
+    <string name="section_request">Tu idea</string>
+    <string name="request_placeholder">Ej.: Lord Varis contrata a una nigromante para saquear la cripta antes de que llegue el grupo.</string>
+    <string name="action_run">Proponer cambios</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="running">Esperando al modelo… los modelos locales pueden tardar unos minutos.</string>
+
+    <string name="rationale_title">Explicación</string>
+    <string name="operations_title">Operaciones propuestas (%1$d)</string>
+    <string name="no_operations">El modelo no propone cambios.</string>
+    <string name="show_json">Ver JSON</string>
+    <string name="hide_json">Ocultar JSON</string>
+    <string name="result_stats">%1$d nodos y %2$d relaciones enviados · %3$s s</string>
+    <string name="error_message">Error: %1$s</string>
+
+    <string name="op_add_node">Nuevo nodo</string>
+    <string name="op_update_node">Modificar nodo</string>
+    <string name="op_remove_node">Eliminar nodo</string>
+    <string name="op_merge_nodes">Fusionar nodos</string>
+    <string name="op_add_edge">Nueva relación</string>
+    <string name="op_update_edge">Modificar relación</string>
+    <string name="op_remove_edge">Eliminar relación</string>
+</resources>

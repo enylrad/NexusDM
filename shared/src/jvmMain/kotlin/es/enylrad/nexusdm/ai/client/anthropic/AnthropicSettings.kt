@@ -1,5 +1,7 @@
 package es.enylrad.nexusdm.ai.client.anthropic
 
+import es.enylrad.nexusdm.ai.client.LlmBackendSettings
+
 /** Configuration of the Claude API client. */
 data class AnthropicSettings(
     /**
@@ -14,7 +16,7 @@ data class AnthropicSettings(
     val useRefusalFallback: Boolean = true,
 ) {
     companion object {
-        const val DEFAULT_MODEL = "claude-opus-5"
+        const val DEFAULT_MODEL = LlmBackendSettings.DEFAULT_CLAUDE_MODEL
         const val DEFAULT_EFFORT = "high"
     }
 }

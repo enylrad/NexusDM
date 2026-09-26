@@ -1,5 +1,6 @@
 package es.enylrad.nexusdm.ai.client.ollama
 
+import es.enylrad.nexusdm.ai.client.LlmBackendSettings
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 
@@ -34,7 +35,7 @@ data class OllamaSettings(
     }
 
     companion object {
-        const val DEFAULT_BASE_URL = "http://localhost:11434"
-        const val DEFAULT_CONTEXT_LENGTH = 16_384
+        const val DEFAULT_BASE_URL = LlmBackendSettings.DEFAULT_OLLAMA_URL
+        const val DEFAULT_CONTEXT_LENGTH = LlmBackendSettings.DEFAULT_CONTEXT_LENGTH
     }
 }

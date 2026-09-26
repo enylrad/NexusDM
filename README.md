@@ -37,11 +37,12 @@ mutations instead of free text.
 ## AI integration
 
 The AI layer is provider-agnostic: `LlmClient` (in `ai.client`) is the only contract the rest of
-the app depends on. `LlmProvider` selects the backend:
+the app depends on. `LlmBackendSettings` describes the backend and `LlmBackendGateway`
+(desktop implementation: `JvmLlmBackendGateway`) creates the client:
 
-- `LlmProvider.Claude` → `AnthropicLlmClient`: Claude API through the official Anthropic Java SDK.
-- `LlmProvider.Ollama` → `OllamaLlmClient`: a local model served by Ollama (`/api/chat` with the
-  JSON schema as `format`). `listModels()` returns the installed models.
+- `LlmBackendSettings.Claude` → `AnthropicLlmClient`: Claude API through the official Anthropic Java SDK.
+- `LlmBackendSettings.Ollama` → `OllamaLlmClient`: a local model served by Ollama (`/api/chat` with
+  the JSON schema as `format`). `listOllamaModels()` returns the installed models.
 
 - `MutationPromptBuilder` builds a stable system prompt (domain rules, node and edge types,
   property schema; cached by the API) and a per-request user prompt with the rendered subgraph.
@@ -61,6 +62,22 @@ Configuration:
   To try a real request against your local instance:
   `OLLAMA_MODEL=qwen3:14b ./gradlew :shared:jvmTest --tests '*OllamaIntegrationTest*' -i`
 
+## Try it: AI playground
+
+The desktop app currently opens an **AI playground** on a built-in sample campaign
+("The Sunken Crown"). Nothing is saved yet: persistence comes later.
+
+1. Start Ollama (`ollama serve`) and make sure you have a model (`ollama list`).
+2. Run the app:
+   - Windows: `.\gradlew.bat :desktopApp:run`
+   - Linux/macOS: `./gradlew :desktopApp:run`
+3. Choose **Ollama**, pick a model (use *Refresh models* if the list is empty), tick the
+   elements your idea is about (e.g. *Lord Varis Hale*), write the idea and press
+   **Propose changes**.
+4. The proposed operations are shown in readable form; *Show JSON* displays the raw batch.
+
+The UI follows the system language (English or Spanish).
+
 ## Project structure
 
 - `desktopApp` – desktop entry point (`main()`).
@@ -72,7 +89,7 @@ es.enylrad.nexusdm
 │   ├── model        // Campaign, GraphNode, GraphEdge, NodeType, EdgeType, Visibility, ExternalRef, AssetRef
 │   ├── schema       // PropertySpec, NodeTypeSchema
 │   ├── mutation     // MutationBatch, GraphMutation, NodePatch, EdgePatch, NodeRef (LLM output contract)
-│   ├── graph        // SubgraphQuery, Subgraph (traversal, validation and mutation applier to come)
+│   ├── graph        // SubgraphQuery, Subgraph, in-memory extractSubgraph (validator and applier to come)
 │   └── repository   // Repository interfaces (planned)
 ├── data
 │   ├── local        // Room database, entities, DAOs (planned)
@@ -86,7 +103,9 @@ es.enylrad.nexusdm
 ├── integration
 │   └── foundry      // Foundry VTT import/sync (planned)
 ├── rendering        // Graph -> campaign documents (planned)
-├── ui               // Compose screens (planned)
+├── sample           // Built-in demo campaign
+├── ui
+│   └── playground   // AI playground screen and its controller
 └── di               // Dependency wiring (planned)
 ```
 
