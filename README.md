@@ -37,8 +37,11 @@ mutations instead of free text.
 ## AI integration
 
 The AI layer is provider-agnostic: `LlmClient` (in `ai.client`) is the only contract the rest of
-the app depends on. The first implementation, `AnthropicLlmClient`, uses the official Anthropic
-Java SDK and the Claude API; a local model backend can be added later behind the same interface.
+the app depends on. `LlmProvider` selects the backend:
+
+- `LlmProvider.Claude` → `AnthropicLlmClient`: Claude API through the official Anthropic Java SDK.
+- `LlmProvider.Ollama` → `OllamaLlmClient`: a local model served by Ollama (`/api/chat` with the
+  JSON schema as `format`). `listModels()` returns the installed models.
 
 - `MutationPromptBuilder` builds a stable system prompt (domain rules, node and edge types,
   property schema; cached by the API) and a per-request user prompt with the rendered subgraph.
@@ -48,8 +51,15 @@ Java SDK and the Claude API; a local model backend can be added later behind the
   return a valid `MutationBatch`.
 - `MutationProposalService` ties everything together and returns the proposed batch.
 
-Configuration: set the `ANTHROPIC_API_KEY` environment variable (or pass the key through
-`AnthropicSettings`). The default model is `claude-opus-5`.
+Configuration:
+
+- **Claude** – set the `ANTHROPIC_API_KEY` environment variable (or pass the key through
+  `AnthropicSettings`). The default model is `claude-opus-5`.
+- **Ollama** – run `ollama serve` and pass an installed model to `OllamaSettings`
+  (e.g. `OllamaSettings(model = "qwen3:14b")`). The context window is set to 16K tokens by
+  default (`contextLength`) because Ollama's own default silently truncates long prompts.
+  To try a real request against your local instance:
+  `OLLAMA_MODEL=qwen3:14b ./gradlew :shared:jvmTest --tests '*OllamaIntegrationTest*' -i`
 
 ## Project structure
 
@@ -69,7 +79,7 @@ es.enylrad.nexusdm
 │   ├── mapper       // Entity <-> domain mappers (planned)
 │   └── repository   // Repository implementations (planned)
 ├── ai               // MutationProposalService
-│   ├── client       // LlmClient contract; jvmMain: Claude API implementation
+│   ├── client       // LlmClient contract; jvmMain: Claude API and Ollama implementations
 │   ├── context      // Subgraph -> prompt context, prompt builder
 │   └── schema       // JSON schema for MutationBatch (structured outputs)
 ├── ingestion        // Documents -> graph extraction (planned)
